@@ -1310,7 +1310,7 @@
 "ayY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor,/area/engineering/engine)
 <<<<<<< HEAD
 >>>>>>> Reapply cloner fix on metaclub.dmm
-"ayZ" = (/obj/structure/closet/crate{opened = 1},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/sheet/glass{amount = 50},/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/cell/high{charge = 100; maxcharge = 15000},/obj/item/stack/sheet/mineral/plasma{amount = 30},/obj/item/device/gps,/obj/effect/decal/warning_stripes{icon_state = "bot"},/turf/simulated/floor{dir = 2; icon_state = "floor"},/area/engineering/engine)
+"ayZ" = (/obj/structure/closet/crate{opened = 1},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/sheet/glass/glass{amount = 50},/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/cell/high{charge = 100; maxcharge = 15000},/obj/item/stack/sheet/mineral/plasma{amount = 30},/obj/item/device/gps,/obj/effect/decal/warning_stripes{icon_state = "bot"},/turf/simulated/floor{dir = 2; icon_state = "floor"},/area/engineering/engine)
 =======
 "ayZ" = (/obj/structure/closet/crate{opened = 1},/obj/item/stack/sheet/metal{amount = 50},/obj/item/stack/rods{amount = 50},/obj/item/stack/sheet/glass/glass{amount = 50},/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/circuitboard/airlock,/obj/item/weapon/cell/high{charge = 100; maxcharge = 15000},/obj/item/stack/sheet/mineral/plasma{amount = 30},/obj/item/device/gps,/obj/effect/decal/warning_stripes{icon_state = "bot"},/turf/simulated/floor{dir = 2; icon_state = "floor"},/area/engineering/engine)
 >>>>>>> Fix glass/glass map errors.
