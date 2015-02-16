@@ -1,0 +1,5 @@
+author: Clusterfack
+delete-after: true
+changes:
+- bugfix: Reagents special actions for aliens works now
+- bugfix: You can now follow any speaker as a ghost, even a regular object
