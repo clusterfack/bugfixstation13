@@ -2,6 +2,8 @@
 
 [Website](http://ss13.undo.it) - [Code](http://github.com/d3athrow/vgstation13/) - [IRC](irc://irc.rizon.net/vgstation) (irc.rizon.net #vgstation)
 
+<iframe src="https://kiwiirc.com/client/irc.rizon.net/?nick=Newcomer|?#vgstation" style="border:0; width:100%; height:450px;"></iframe>
+
 ---
 
 ### GETTING THE CODE
