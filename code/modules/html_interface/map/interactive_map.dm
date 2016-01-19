@@ -1,10 +1,11 @@
 #define MAPHEADER "<script type=\"text/javascript\" src=\"3-jquery.timers.js\"></script><script type=\"text/javascript\" src=\"libraries.min.js\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\"html_interface_icons.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"map_shared.css\" /><script type=\"text/javascript\" src=\"map_shared.js\">"
-#define MAPCONTENT "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a> </div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>"
+#define MAPCONTENT "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a></div> <div class = \"dropdown\"><button class = \"dropbtn\">Change Z-Level</button><div class = \"dropdown-content\">[minimaphrefs]</div></div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>"
 // Base datum for html_interface interactive maps.
 var/const/MAX_ICON_DIMENSION = 1024
 var/const/ICON_SIZE = 4
 var/const/ALLOW_CENTCOMM = FALSE
 
+var/minimaphrefs = ""
 /datum/interactive_map
 	var/list/interfaces
 	var/list/data
@@ -60,6 +61,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 	for (var/z = 1 to world.maxz)
 		if(z == CENTCOMM_Z && !ALLOW_CENTCOMM) continue
 		generateMiniMap(z)
+		minimaphrefs += "<p><a href='javascript:changezlevels([z]);'>[z]</a></p>"
 
 	testing("MINIMAP: All minimaps have been generated.")
 	minimapinit = 1
