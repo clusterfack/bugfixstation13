@@ -35,9 +35,6 @@
 	var/locked_should_lie = 0	//Whether locked mobs should lie down, used by beds.
 	var/lockflags = DENSE_WHEN_LOCKING | DENSE_WHEN_LOCKED
 
-	// Can we send relaymove() if gravity is disabled or we are in space? (Should be handled by relaymove, but shitcode abounds)
-	var/internal_gravity = 0
-
 /atom/movable/New()
 	. = ..()
 	areaMaster = get_area_master(src)
