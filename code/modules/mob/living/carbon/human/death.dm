@@ -39,14 +39,14 @@
 		ticker.mode.update_cult_icons_removed(mind)
 		ticker.mode.cult -= mind
 
+	species = null
+
+	..()
+
 	for(var/obj/Overlays/O in obj_overlays)
 		returnToPool(O)
 
 	obj_overlays = null
-
-	species = null
-
-	..()
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
