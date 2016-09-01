@@ -1,3 +1,63 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Movement loop system courtesy of Ter13's edge sliding demo (minus the edge sliding demo) as well as the keystate library//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var
+	list/opposite_dirs = list(SOUTH,NORTH,null,WEST,null,null,null,EAST)
+
+/client/var/tmp/mloop = 0
+/client/var/tmp/move_dir = 0 //keep track of the direction the player is currently trying to move in.
+/client/var/tmp/keypresses = 0
+
+/client/verb/MoveKey(Dir as num,State as num)
+	set hidden = 1
+	//if we are currently not moving at the start of this function call, set a flag for later
+	if(!move_dir)
+		. = 1
+
+	//get the opposite direction
+	var/opposite = opposite_dirs[Dir]
+
+	if(State)
+		//turn on the bitflags
+		move_dir |= Dir
+		keypresses |= Dir
+
+		//make sure that conflicting directions result in the newest one being dominant.
+		if(opposite&keypresses)
+			move_dir &= ~opposite
+	else
+		//turn off the bitflags
+		move_dir &= ~Dir
+		keypresses &= ~Dir
+
+		//restore non-dominant directional keypress
+		if(opposite&keypresses)
+			move_dir |= opposite
+
+	//if earlier flag was set, and we now are going to be moving
+	if(.&&move_dir)
+		move_loop()
+
+/client/North()
+/client/South()
+/client/East()
+/client/West()
+
+/client/proc/move_loop()
+	set waitfor = 0
+	if(src.mloop) return
+	mloop = 1
+	src.Move(mob.loc,move_dir)
+	while(src.move_dir)
+		sleep(world.tick_lag)
+		to_chat(world, "move  dir [move_dir]")
+		if(src.move_dir)
+			src.Move(mob.loc,move_dir)
+	mloop = 0
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /mob/Cross(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	if(air_group || (height==0))
 		return 1
@@ -12,22 +72,6 @@
 			return 1
 
 	return (!mover.density || !density || lying)
-
-/client/North()
-	..()
-
-
-/client/South()
-	..()
-
-
-/client/West()
-	..()
-
-
-/client/East()
-	..()
-
 
 /client/Northeast()
 	treat_hotkeys(NORTHEAST)
@@ -243,6 +287,9 @@
 		O.dir = direct
 
 /client/Move(loc,dir)
+	var/i = 0
+	i++
+	to_chat(world, "why aren't we moving to dir [dir] when we have [i]")
 	if(move_delayer.next_allowed > world.time)
 		return 0
 
@@ -250,39 +297,50 @@
 	if(mob.deny_client_move)
 		to_chat(src, "<span class='warning'>You cannot move this mob.</span>")
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.control_object)
 		Move_object(dir)
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.orient_object)
 		Dir_object(dir)
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.incorporeal_move)
 		Process_Incorpmove(dir)
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.stat == DEAD)
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(isAI(mob))
 		return AIMove(loc,dir,mob)
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.monkeyizing)
 		return//This is sota the goto stop mobs from moving var
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(Process_Grab())
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(mob.locked_to) //if we're locked_to to something, tell it we moved.
 		return mob.locked_to.relaymove(mob, dir)
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(!mob.canmove)
 		return
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 	//	if(!mob.Process_Spacemove(0))	return 0
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	// If we're in space or our area has no gravity...
 	var/turf/turf_loc = mob.loc
 	if(istype(turf_loc) && !turf_loc.has_gravity())
@@ -297,11 +355,13 @@
 		// Block relaymove() if needed.
 		if(!can_move_without_gravity && !mob.Process_Spacemove(0))
 			return 0
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
 		return O.relaymove(mob, dir)
-
+	i++
+	to_chat(world, "why aren't we moving [i]")
 	if(isturf(mob.loc))
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
@@ -325,7 +385,8 @@
 		if(mob.pinned.len)
 			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
 			return 0
-
+		i++
+		to_chat(world, "why aren't we moving [i]")
 		// COMPLEX MOVE DELAY SHIT
 		////////////////////////////
 		var/move_delay=0 // set move delay
@@ -343,6 +404,8 @@
 		if(Findgrab)
 			move_delay += 7
 
+		i++
+		to_chat(world, "why aren't we moving [i]")
 		//We are now going to move
 		move_delay = max(move_delay,1)
 		if(mob.movement_speed_modifier)
@@ -384,6 +447,7 @@
 			step_rand(mob)
 			mob.last_movement=world.time
 		else
+			to_chat(world, "but no really what the fuck [dir]")
 			. = ..()
 			mob.last_movement=world.time
 

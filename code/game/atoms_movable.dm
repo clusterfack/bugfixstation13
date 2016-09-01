@@ -122,6 +122,8 @@
 /atom/movable/Move(newLoc,Dir=0,step_x=0,step_y=0)
 	if(!loc || !newLoc)
 		return 0
+	var/i = 1
+	to_chat(src, "but we should be moving [i]")
 	//set up glide sizes before the move
 	//ensure this is a step, not a jump
 
@@ -134,7 +136,8 @@
 		var/mob/M = src
 		if(M.client)
 			move_delay = (3+(M.client.move_delayer.next_allowed - world.time))*world.tick_lag
-
+	i++
+	to_chat(src, "but we should be moving [i]")
 	var/can_pull_tether = 0
 	if(tether)
 		if(tether.attempt_to_follow(src,newLoc))
@@ -148,7 +151,8 @@
 
 		update_dir()
 		return
-
+	i++
+	to_chat(src, "but we should be moving [i]")
 	if(loc != newLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
@@ -175,14 +179,16 @@
 						. = step(src, WEST)
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
-
+	i++
+	to_chat(src, "but we should be moving [i] did we? [.]")
 
 	if(. && locked_atoms && locked_atoms.len)	//The move was succesful, update locked atoms.
 		spawn(0)
 			for(var/atom/movable/AM in locked_atoms)
 				var/datum/locking_category/category = locked_atoms[AM]
 				category.update_lock(AM)
-
+	i++
+	to_chat(src, "but we should be moving [i]")
 	update_dir()
 
 	if(!loc || (loc == oldloc && oldloc != newLoc))
@@ -197,7 +203,8 @@
 		if(!tether_datum.Check_Integrity())
 			tether_datum.snap = 1
 			tether_datum.Delete_Chain()
-
+	i++
+	to_chat(src, "but we should be moving [i]")
 	last_move = (Dir || get_dir(oldloc, newLoc)) //If direction isn't specified, calculate it ourselves
 	set_inertia(last_move)
 
@@ -206,6 +213,8 @@
 	src.l_move_time = world.timeofday
 	// Update on_moved listeners.
 	INVOKE_EVENT(on_moved,list("loc"=newLoc))
+	i++
+	to_chat(src, "but we should be moving [i] did we? [.]")
 	return .
 
 //The reason behind change_dir()
